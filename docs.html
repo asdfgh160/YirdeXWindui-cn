@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WindUI 中文文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.5;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 白色主题 */
+        body.white-theme {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            width: 100%;
+        }
+
+        /* ===== 头部 ===== */
+        .header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .site-title {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .white-theme .site-title {
+            color: #000000;
+        }
+
+        .official-link {
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .official-link a {
+            color: #60a5fa;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+            transition: color 0.3s;
+        }
+
+        .official-link a:hover {
+            color: #93c5fd;
+            border-bottom-color: #93c5fd;
+        }
+
+        .white-theme .official-link a {
+            color: #2563eb;
+        }
+
+        .white-theme .official-link a:hover {
+            color: #1d4ed8;
+        }
+
+        /* 右侧按钮组 */
+        .right-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        /* 主题切换胶囊 - 缩小版，横向排列 */
+        .theme-switch {
+            display: flex;
+            flex-direction: row;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .white-theme .theme-switch {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 18px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        /* 默认黑色主题：暗色选项高亮白色，亮色选项淡灰 */
+        .dark-option {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .dark-option .icon {
+            color: #000000;
+        }
+
+        .light-option {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .light-option .icon {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 白色主题：亮色选项高亮黑色，暗色选项淡灰 */
+        .white-theme .dark-option {
+            background: transparent;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        .white-theme .dark-option .icon {
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        .white-theme .light-option {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .white-theme .light-option .icon {
+            color: #ffffff;
+        }
+
+        .theme-option .icon {
+            width: 14px;
+            height: 14px;
+            transition: all 0.3s;
+        }
+
+        /* 菜单按钮 - 稍微缩小以匹配 */
+        .menu-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+
+        .menu-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .white-theme .menu-button {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #000000;
+        }
+
+        .white-theme .menu-button:hover {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        /* ===== 作者声明 ===== */
+        .notice {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .white-theme .notice {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .notice-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .notice-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .notice-item strong {
+            font-weight: 600;
+            color: #ffffff;
+            margin-right: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .white-theme .notice-item strong {
+            color: #000000;
+        }
+
+        .qq {
+            font-family: 'Fira Code', monospace;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            display: inline-block;
+            color: #60a5fa;
+            transition: background-color 0.3s;
+        }
+
+        .white-theme .qq {
+            background: rgba(0, 0, 0, 0.05);
+            color: #2563eb;
+        }
+
+        /* 声明文字样式 */
+        .statement-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+
+        .white-theme .statement-text {
+            color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* 敏感词样式 - 纯色 + 边框 */
+        .sensitive-word {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin: 0 2px;
+            border: 1.5px solid;
+            background: transparent;
+        }
+
+        .sensitive-word.orange {
+            color: #ff8c42;
+            border-color: #ff8c42;
+        }
+
+        .sensitive-word.red {
+            color: #ff4d4d;
+            border-color: #ff4d4d;
+        }
+
+        .white-theme .sensitive-word.orange {
+            color: #ff8c42;
+            border-color: #ff8c42;
+        }
+
+        .white-theme .sensitive-word.red {
+            color: #ff4d4d;
+            border-color: #ff4d4d;
+        }
+
+        /* 复制按钮 */
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 4px 8px;
+            margin-left: 8px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .white-theme .copy-btn {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .white-theme .copy-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.15);
+            color: #000000;
+        }
+
+        .layers-plus-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 提示框 */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: white;
+            font-size: 0.95rem;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .white-theme .toast {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #000000;
+        }
+
+        /* ===== 主要内容卡片 ===== */
+        .main-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .white-theme .main-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* 标题区域 */
+        .hero {
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .white-theme .hero h1 {
+            color: #000000;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.25rem;
+            transition: color 0.3s;
+        }
+
+        .white-theme .hero h1 span {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero .subhead {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            transition: color 0.3s;
+        }
+
+        .white-theme .hero .subhead {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* 网格布局 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 特性列表 */
+        .features h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .white-theme .features h2 {
+            color: #000000;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            margin-bottom: 0.85rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .white-theme .features-list li {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .features-list li::before {
+            content: "·";
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: #60a5fa;
+            margin-right: 0.75rem;
+            line-height: 1;
+        }
+
+        .white-theme .features-list li::before {
+            color: #2563eb;
+        }
+
+        /* Beta 卡片 */
+        .beta-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .white-theme .beta-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .beta-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .white-theme .beta-card h3 {
+            color: #000000;
+        }
+
+        .beta-card p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .white-theme .beta-card p {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        /* 加载卡片 */
+        .load-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s, background-color 0.3s, border-color 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .load-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .white-theme .load-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .white-theme .load-card:hover {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .load-card-left h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .white-theme .load-card-left h4 {
+            color: #000000;
+        }
+
+        .load-card-left p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .white-theme .load-card-left p {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .load-card-right {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.3);
+            transition: color 0.3s;
+        }
+
+        .white-theme .load-card-right {
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== 侧边栏 ===== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .white-theme .sidebar-overlay {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            background: #0a0a0a;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1001;
+            transition: left 0.3s ease, background-color 0.3s, border-color 0.3s;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .white-theme .sidebar {
+            background: #f5f5f5;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s;
+        }
+
+        .white-theme .sidebar-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .white-theme .sidebar-logo {
+            color: #000000;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: color 0.3s;
+        }
+
+        .close-button:hover {
+            color: white;
+        }
+
+        .white-theme .close-button {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .white-theme .close-button:hover {
+            color: #000000;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .white-theme .sidebar-title {
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        .sidebar-item {
+            display: block;
+            padding: 0.6rem 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s, color 0.3s;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .white-theme .sidebar-item {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .white-theme .sidebar-item:hover {
+            background: rgba(0, 0, 0, 0.03);
+            color: #000000;
+        }
+
+        .sidebar-item.active {
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border-left: 2px solid #60a5fa;
+        }
+
+        .white-theme .sidebar-item.active {
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
+            border-left: 2px solid #2563eb;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 1.5rem 0;
+            transition: background-color 0.3s;
+        }
+
+        .white-theme .sidebar-divider {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* 页脚 */
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .white-theme .footer {
+            color: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        @media (max-width: 640px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            .main-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <script src="js/jq.js"></script>
+</head>
+<body id="v1">
+    <!-- 提示框 -->
+    <div id="toast" class="toast">✅ 复制成功</div>
+
+    <div id="v2" class="container">
+        <!-- 头部：标题 + 菜单按钮 + 主题切换 -->
+        <div id="v3" class="header">
+            <div id="v4" class="header-left">
+                <div id="v5" class="site-title">WindUI · 中文</div>
+                <div id="v6" class="official-link">
+                    <a id="v7" href="https://footagesus.github.io/WindUI-Docs/" target="_blank" rel="noopener noreferrer">官方原版 footagesus.github.io/WindUI-Docs/</a>
+                </div>
+            </div>
+            <!-- 右侧按钮组 -->
+            <div class="right-buttons">
+                <!-- 主题切换胶囊 - 横向排列 -->
+                <div class="theme-switch" id="themeSwitch">
+                    <div class="theme-option dark-option" id="darkOption">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>暗色</span>
+                    </div>
+                    <div class="theme-option light-option" id="lightOption">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                            <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span>白色</span>
+                    </div>
+                </div>
+                <!-- 菜单按钮 -->
+                <div class="menu-button" id="menuButton">
+                    <span id="v8" class="menu-icon">☰</span>
+                </div>
+            </div>
+        </div>
+
+
+<!-- 作者声明部分-->
+<div id="v9" class="notice">
+    <div id="v10" class="notice-item">
+        <strong id="v11">网站作者：</strong> 
+        <span class="colorful-name">YirdeX</span>
+    </div>
+    <div id="v12" class="notice-item">
+        <strong id="v13">声明：</strong> 
+        <span class="statement-text">
+            本网站是独立个人汉化，从而进行了一定的修改，如果有任何代码上的错误不要找我，我只是一个翻译的，不属于
+            <span class="sensitive-word orange">官方授权</span>，单纯为了制作脚本方便而汉化。如有
+            <span class="sensitive-word red">侵权</span>，可随时联系我下架。
+        </span>
+    </div>
+    <!-- 联系方式 + 复制按钮 -->
+    <div class="notice-item" style="display: flex; align-items: center; flex-wrap: wrap;">
+        <strong>联系方式：</strong>
+        <span class="qq" id="qqNumber">QQ：2137844138</span>
+        <button class="copy-btn" id="copyQQBtn" title="复制QQ号">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="layers-plus-icon">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+                <line x1="9" y1="12" x2="15" y2="12"/>
+                <line x1="12" y1="9" x2="12" y2="15"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<style>
+/* 彩色名字样式 - 加到你的style标签里 */
+.colorful-name {
+    background: linear-gradient(135deg, #00ff87, #60efff, #ff6b6b, #ffd93d, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradientFlow 6s ease infinite;
+    display: inline-block;
+    font-weight: 600;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style>
+
+        <!-- 主要内容卡片 -->
+        <div id="v17" class="main-card">
+            <!-- 大标题 -->
+            <div id="v18" class="hero">
+                <h1 id="v19"> 编写优美脚本 <span id="v20">使用 WindUI</span> </h1>
+                <div id="v21" class="subhead">现代化 UI 库。设计简洁，代码开源。</div>
+            </div>
+
+            <!-- 两栏布局 -->
+            <div id="v26" class="grid-2">
+                <div id="v27" class="features">
+                    <h2 id="v28">为什么选择 WindUI？</h2>
+                    <ul id="v29" class="features-list">
+                        <li id="v30">现代设计</li>
+                        <li id="v31">可自定义</li>
+                        <li id="v32">开源免费</li>
+                        <li id="v33">丰富组件</li>
+                        <li id="v34">密钥系统</li>
+                    </ul>
+                </div>
+                <div id="v35" class="beta-card">
+                    <h3 id="v36">WindUI 目前处于 Beta 测试阶段</h3>
+                    <p id="v37">该项目仍在积极开发中。可能会遇到错误、问题和不稳定的功能。我们持续致力于改进，请耐心等待，并反馈您遇到的任何问题。</p>
+                </div>
+            </div>
+
+            <!-- 加载卡片 -->
+            <a id="v39" href="https://footagesus.github.io/WindUI-Docs/" target="_blank" rel="noopener noreferrer" class="load-card">
+                <div id="v40" class="load-card-left">
+                    <h4 id="v41">加载 WindUI →</h4>
+                    <p id="v42">使用 loadstring 加载 WindUI</p>
+                </div>
+                <div id="v43" class="load-card-right"> → </div>
+            </a>
+        </div>
+
+        <!-- 页脚 -->
+        <div id="v44" class="footer">
+            <span id="v45">汉化版本 · 仅用于脚本制作便利</span>
+        </div>
+    </div>
+
+    <!-- 侧边栏遮罩 -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- 侧边栏 -->
+    <div class="sidebar" id="sidebar">
+        <div id="v46" class="sidebar-header">
+            <span id="v47" class="sidebar-logo">WindUI 文档</span>
+            <button class="close-button" id="closeButton">×</button>
+        </div>
+
+        <!-- 介绍 -->
+        <div id="v48" class="sidebar-section">
+            <div id="v49" class="sidebar-title">介绍</div>
+            <a id="v50" href="#" class="sidebar-item active">关于 WindUI</a>
+        </div>
+
+        <!-- 设置 -->
+        <div id="v51" class="sidebar-section">
+            <div id="v52" class="sidebar-title">设置</div>
+            <a id="v53" href="#" class="sidebar-item">加载 WindUI</a>
+            <a id="v54" href="#" class="sidebar-item">主题定制</a>
+        </div>
+
+        <!-- UI 组件 -->
+        <div id="v55" class="sidebar-section">
+            <div id="v56" class="sidebar-title">UI 组件</div>
+            <a id="v57" href="#" class="sidebar-item">窗口</a>
+            <a id="v58" href="#" class="sidebar-item">密钥系统</a>
+            <a id="v59" href="#" class="sidebar-item">标签页</a>
+            <a id="v60" href="#" class="sidebar-item">标签页区域</a>
+            <a id="v61" href="#" class="sidebar-item">对话框</a>
+            <a id="v62" href="#" class="sidebar-item">弹窗</a>
+            <a id="v63" href="#" class="sidebar-item">标签</a>
+            <a id="v64" href="#" class="sidebar-item">通知</a>
+            <a id="v65" href="#" class="sidebar-item">分割线</a>
+            <a id="v66" href="#" class="sidebar-item">间距</a>
+        </div>
+
+        <!-- 元素 -->
+        <div id="v67" class="sidebar-section">
+            <div id="v68" class="sidebar-title">元素</div>
+            <a id="v69" href="#" class="sidebar-item">按钮</a>
+            <a id="v70" href="#" class="sidebar-item">代码块</a>
+            <a id="v71" href="#" class="sidebar-item">颜色选择器</a>
+            <a id="v72" href="#" class="sidebar-item">下拉菜单</a>
+            <a id="v73" href="#" class="sidebar-item">输入框</a>
+            <a id="v74" href="#" class="sidebar-item">快捷键绑定</a>
+            <a id="v75" href="#" class="sidebar-item">段落</a>
+            <a id="v76" href="#" class="sidebar-item">区块</a>
+            <a id="v77" href="#" class="sidebar-item">滑块</a>
+            <a id="v78" href="#" class="sidebar-item">开关</a>
+        </div>
+
+        <!-- 其他 -->
+        <div id="v79" class="sidebar-section">
+            <div id="v80" class="sidebar-title">其他</div>
+            <a id="v81" href="#" class="sidebar-item">安装指南</a>
+            <a id="v82" href="#" class="sidebar-item">本地化</a>
+            <a id="v83" href="#" class="sidebar-item">配置</a>
+            <a id="v84" href="#" class="sidebar-item">图标</a>
+            <a id="v85" href="#" class="sidebar-item">常见问题</a>
+        </div>
+
+
+    <script>
+        // 获取元素
+        const menuButton = document.getElementById('menuButton');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeButton = document.getElementById('closeButton');
+        const copyBtn = document.getElementById('copyQQBtn');
+        const toast = document.getElementById('toast');
+        const themeSwitch = document.getElementById('themeSwitch');
+        const darkOption = document.getElementById('darkOption');
+        const lightOption = document.getElementById('lightOption');
+        const body = document.body;
+
+        // 打开侧边栏
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            });
+        }
+
+        // 关闭侧边栏的函数
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // 点击关闭按钮
+        if (closeButton) {
+            closeButton.addEventListener('click', closeSidebar);
+        }
+
+        // 点击遮罩关闭
+        if (overlay) {
+            overlay.addEventListener('click', closeSidebar);
+        }
+
+        // 复制功能
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function() {
+                const qq = "2137844138";
+                
+                // 使用 Clipboard API
+                navigator.clipboard.writeText(qq).then(() => {
+                    // 显示提示框
+                    toast.classList.add('show');
+                    
+                    // 1.5秒后隐藏提示框
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 1500);
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                    // 降级方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = qq;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    
+                    toast.textContent = '✅ 复制成功';
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        toast.textContent = '✅ 复制成功';
+                    }, 1500);
+                });
+            });
+        }
+
+        // 主题切换功能 - 点击整个胶囊切换
+        if (themeSwitch) {
+            themeSwitch.addEventListener('click', () => {
+                body.classList.toggle('white-theme');
+            });
+        }
+
+        // 单独点击暗色选项（切换为黑色主题）
+        if (darkOption) {
+            darkOption.addEventListener('click', (e) => {
+                e.stopPropagation();
+                body.classList.remove('white-theme');
+            });
+        }
+
+        // 单独点击亮色选项（切换为白色主题）
+        if (lightOption) {
+            lightOption.addEventListener('click', (e) => {
+                e.stopPropagation();
+                body.classList.add('white-theme');
+            });
+        }
+    </script>
+    <input type="checkbox" id="v89">
+</body>
+</html>
